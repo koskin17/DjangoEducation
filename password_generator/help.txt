@@ -1,0 +1,32 @@
+1. Установите Django:
+    ```
+    pip install django
+    ```
+
+2. Создайте новый проект Django:
+    ```
+    django-admin startproject myproject
+    ```
+
+3. Перейдите в директорию проекта:
+    ```
+    cd myproject
+    ```
+
+4. Создайте и примените миграции базы данных:
+    ```
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+8. Запустите сервер разработки:
+    ```
+    python manage.py runserver
+    ```
+
+9. Откройте браузер и перейдите по адресу:
+    ```
+    http://127.0.0.1:8000/
+    ```
+
+Теперь ваш проект Django запущен и готов к разработке.
