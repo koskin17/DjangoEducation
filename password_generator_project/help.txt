@@ -19,6 +19,25 @@
     python manage.py migrate
     ```
 
+5. Создайте новое приложение в Django:
+    ```
+    python manage.py startapp myapp
+    ```
+
+6. Добавьте ваше приложение в список `INSTALLED_APPS` в файле `settings.py`:
+    ```python
+    INSTALLED_APPS = [
+        ...
+        'myapp',
+    ]
+    ```
+
+7. Создайте и примените миграции для вашего приложения (если есть модели):
+    ```
+    python manage.py makemigrations myapp
+    python manage.py migrate
+    ```
+
 8. Запустите сервер разработки:
     ```
     python manage.py runserver
@@ -30,3 +49,4 @@
     ```
 
 Теперь ваш проект Django запущен и готов к разработке.
+
