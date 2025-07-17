@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>  
+</head>
+<body>
+
+    <h1>{{ title }}</h1>
+        {% for item in news %}
+            <p><small>Опубликовано: {{ item.created_at|date:"Y-m-d H:i" }}</small></p> <!-- Тут дополнительно указывается формат даты, в котором она будет выподится на страницу -->
+            <div>
+                <h2>{{ item.title }}</h2>
+                <p>{{ item.content }}</p> 
+                <hr>
+            </div>
+        {% endfor %}
+    
+</body>
+</html>
