@@ -11,3 +11,14 @@ created_at = models.DateTimeField(auto_now_add=True) # Отличие от auto_
 photo = models.ImageField(upload_to='photos/%Y/%m/%d') # В этом поле сохраняется путь к загруженному файлу. Отличие от FileField в том, что FileField позволяет загружать файлы любого типа,  а ImageField только изображения. Также вместо названия папки может быть название вызываемого метода, в котором будет прописана логика загрузки / проверки файлов или ещё что-то
 
 is_published = models.BooleanField(default=True) # Если значение по умолчанию не определено, то значение равно None.
+
+После того, как подготовлены все модели приложеие (models) созаются миграции, которые создают файлы для их последующего исполнения и создания таблиц в Бдю
+Для того, чтобы посмотреть SQL код запроса выполнения миграций используется команда python manage.py sqlmigrate news 0001 (указывается имя модели и порядковый номер миграции). После этого будет выведен код SQL-запроса:
+    BEGIN;
+    --
+    -- Create model News
+    --
+    CREATE TABLE "news_news" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(150) NOT NULL, "content" text NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "photo" varchar(100) NOT NULL, "is_published" bool NOT NULL);
+    COMMIT;
+
+    
