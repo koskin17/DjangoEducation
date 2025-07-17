@@ -21,4 +21,10 @@ is_published = models.BooleanField(default=True) # Если значение п�
     CREATE TABLE "news_news" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(150) NOT NULL, "content" text NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "photo" varchar(100) NOT NULL, "is_published" bool NOT NULL);
     COMMIT;
 
+    Чтобы посмотреть в консоле django выполненные запросы используется команда:
+        from django.db import connection
+        connection.queries
+
+        После добавления записи в БД и объекта (строки) появляется свойство "pk", которое равно "id".
+
     

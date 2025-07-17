@@ -9,3 +9,6 @@ class News(models.Model):
     photo = models.ImageField(upload_to='photos/%Y/%m/%d')
     # В этом поле сохраняется путь к загруженному файлу. Отличие от FileField в том, что FileField позволяет загружать файлы любого типа,  а ImageField только изображения
     is_published = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
