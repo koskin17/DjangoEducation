@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'news.apps.NewsConfig', # 'news' - это вариант короткой записи, но такой вариант не рекомендуется использовать. Лучше указывать путь к классу в файле конфигурации приложения
 ]
 
 MIDDLEWARE = [

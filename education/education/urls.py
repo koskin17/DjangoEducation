@@ -15,8 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+# Функция include позволяет подключать списки маршрутов из приложений, которые хранятся в файлах urls.py в самих приложения
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('news/', include('news.urls'), name='news'), # Если используется список маршрутов (include), то django отбрасыввет не только домен, но и первый параметр, 'news/' в данном случае. Т.е. в итоге получается пустая строка.
 ]
