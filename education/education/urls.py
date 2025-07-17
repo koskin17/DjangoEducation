@@ -21,5 +21,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('news/', include('news.urls'), name='news'), # Если используется список маршрутов (include), то django отбрасыввет не только домен, но и первый параметр, 'news/' в данном случае. Т.е. в итоге получается пустая строка.
+    path('', include('news.urls'), name='news'), # Если используется список маршрутов (include), то django отбрасыввет не только домен, но и первый параметр, 'news/' в данном случае. Т.е. в итоге получается пустая строка.
 ]
