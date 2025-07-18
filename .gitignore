@@ -1,4 +1,6 @@
 venv/
 .history/
 .vscode/
-education/education/__pycache__
+**/__pycache__/
+media/
+**/migrations/
