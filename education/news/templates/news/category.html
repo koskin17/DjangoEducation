@@ -6,46 +6,37 @@
 {% endblock %}
 
 {% block sidebar %}
-<div class="col-md-3"> {#4 колонки отводится под сайдбар#}
-    <div class="list-group">
-        {% for item_category in categories %}
-            <a href="{% url 'category' item_category.pk %}" class="list-group-item list-group-item-action" aria-current="true">{{  item_category.title }}</a>
-        {% empty %}
-            <p class="text-muted">Категорий нет.</p>
-        {% endfor %}
-    </div>
-</div>
+{% include 'include/_sidebar.html' %}
 {% endblock %}
+
 {% block content %}
-<div class="col-md-9">
-    {% for item_news in news %} <!-- У цикла for есть параметр reversed (for item_news in news reversed) - это встроенный тег Django, который позволяет развернуть список новостей в обратном порядке, т.е. последние новости будут первыми. -->
-    <div class="card mb-3">
-        <div class="card-header">
-        <!-- {{ forloop.counter }} forloop.counter - это встроенная переменная, которая позволяет получить номер текущего элемента в цикле. -->
-            Категория: {{ item_news.category.title }}
-        </div>
-        <div class="card-body">
-            <div class="d-flex align-items-start" style="min-height: 300px;">    {# Добавляем d-flex для создания flex-контейнера #}
-                {% if item_news.photo %}
-                    <img src="{{ item_news.photo.url }}" alt="" width="350" class="flex-shrink-0 me-3"> {# flex-shrink-0 чтобы изображение не сжималось, me-3 для margin-right #}
-                {% else %}
-                    <img src="https://picsum.photos/seed/picsum/200/300" alt="" width="350" class="flex-shrink-0 me-3"> {# То же самое для заглушки #}
-                {% endif %}
-                <div class="flex-grow-1"> {# flex-grow-1 позволяет этому блоку занимать оставшееся пространство #}
-                    <div class="media-body">
-                        <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ item_news.title }}</h5> <!-- Тег cycle позволяет по кругу менять цвет заголовка, к примеру. Т.е. указывается два параметра (в данном случае это просто команды bootstrap для окрашивания текста заголовка) и идёт круговой выбор между указанными параметрами -->
-                        <p class="card-text">{{ item_news.content|truncatewords:50 }}</p> {# Тег linebreaks оборачивает текст в теги параграфа. Тег truncatewirds обрезает строку до указанного кол-ва слов#}
-                        <a href="#" class="btn btn-primary">Далее...</a>
-                    </div>
+{% for item_news in news %} <!-- У цикла for есть параметр reversed (for item_news in news reversed) - это встроенный тег Django, который позволяет развернуть список новостей в обратном порядке, т.е. последние новости будут первыми. -->
+<div class="card mb-3">
+    <div class="card-header">
+    <!-- {{ forloop.counter }} forloop.counter - это встроенная переменная, которая позволяет получить номер текущего элемента в цикле. -->
+        Категория: {{ item_news.category.title }}
+    </div>
+    <div class="card-body">
+        <div class="d-flex align-items-start" style="min-height: 300px;">    {# Добавляем d-flex для создания flex-контейнера #}
+            {% if item_news.photo %}
+                <img src="{{ item_news.photo.url }}" alt="" width="350" class="flex-shrink-0 me-3"> {# flex-shrink-0 чтобы изображение не сжималось, me-3 для margin-right #}
+            {% else %}
+                <img src="https://picsum.photos/seed/picsum/200/300" alt="" width="350" class="flex-shrink-0 me-3"> {# То же самое для заглушки #}
+            {% endif %}
+            <div class="flex-grow-1"> {# flex-grow-1 позволяет этому блоку занимать оставшееся пространство #}
+                <div class="media-body">
+                    <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ item_news.title }}</h5> <!-- Тег cycle позволяет по кругу менять цвет заголовка, к примеру. Т.е. указывается два параметра (в данном случае это просто команды bootstrap для окрашивания текста заголовка) и идёт круговой выбор между указанными параметрами -->
+                    <p class="card-text">{{ item_news.content|truncatewords:50 }}</p> {# Тег linebreaks оборачивает текст в теги параграфа. Тег truncatewirds обрезает строку до указанного кол-ва слов#}
+                    <a href="#" class="btn btn-primary">Далее...</a>
                 </div>
             </div>
         </div>
-        <div class="card-footer text-body-secondary">
-            {{ item_news.created_at|timesince }} {#Тег date позволяет выводить дату в заданном формате (date:"Y-m-d H:i:s), а тег timesince позволяет увидеть сколько времени прошло с какого-то момента до текущего. В данном случае будет показано время, которое прошло с момента опубликования новости до нынешнего момента#}
-        </div>
     </div>
-    {% empty %} <!-- Тег empty позволяет указать, что будет отображаться, если список, по которому идёт, итерация цикла for, пусть. К примеру, обратились к списку, который пустой или ошиблись в имени списка -->
-        Больше новостей нет.
-    {% endfor %}
+    <div class="card-footer text-body-secondary">
+        {{ item_news.created_at|timesince }} {#Тег date позволяет выводить дату в заданном формате (date:"Y-m-d H:i:s), а тег timesince позволяет увидеть сколько времени прошло с какого-то момента до текущего. В данном случае будет показано время, которое прошло с момента опубликования новости до нынешнего момента#}
+    </div>
 </div>
+{% empty %} <!-- Тег empty позволяет указать, что будет отображаться, если список, по которому идёт, итерация цикла for, пусть. К примеру, обратились к списку, который пустой или ошиблись в имени списка -->
+    Больше новостей нет.
+{% endfor %}
 {% endblock  %}
