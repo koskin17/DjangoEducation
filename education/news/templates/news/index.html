@@ -27,20 +27,23 @@
     <h1>{{ title }}</h1>
     <div class="row">
         <div class="col-md-12">
-            {% for item in news %}
+            {% for item_new in news %} <!-- У цикла for есть параметр reversed (for item_new in news reversed) - это встроенный тег Django, который позволяет развернуть список новостей в обратном порядке, т.е. последние новости будут первыми. -->
             <div class="card mb-3">
                 <div class="card-header">
-                    Категория: {{ item.category.title }}
+                   {{ forloop.counter }} <!-- forloop.counter - это встроенная переменная, которая позволяет получить номер текущего элемента в цикле. -->
+                    Категория: {{ item_new.category.title }}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.content }}</p>
+                    <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ item_new.title }}</h5> <!-- Тег cycle позволяет по кругу менять цвет заголовка, к примеру. Т.е. указывается два параметра (в данном случае это просто команды bootstrap для окрашивания текста заголовка) и идёт круговой выбор между указанными параметрами -->
+                    <p class="card-text">{{ item_new.content }}</p>
                     <a href="#" class="btn btn-primary">Далее...</a>
                 </div>
                 <div class="card-footer text-body-secondary">
                     {{ item.created_at|date:"Y-m-d H:i:s" }}
                 </div>
             </div>
+            {% empty %} <!-- Тег empty позволяет указать, что будет отображаться, если список, по которому идёт, итерация цикла for, пусть. К примеру, обратились к списку, который пустой или ошиблись в имени списка -->
+                Больше новостей нет.
             {% endfor %}
         </div>
     </div>
