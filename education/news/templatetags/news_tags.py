@@ -19,6 +19,6 @@ def get_categories():
 # Создаём inclusion_tag
 # Сначала регистрируем декоратором шаблон, который мы создаём предварительно
 @register.inclusion_tag('news/list_categories.html')
-def show_categories(arg1='Hello', arg2='World'):
+def show_categories(arg1='Hello', arg2='World'):    # Можно передавать дополнительные параметры (def show_categories(arg1='Hello', arg2='World')
     categories = Category.objects.all()
-    return {"categories": categories, "arg1": arg1, "arg2": arg2}
+    return {"categories": categories, "arg1": arg1, "arg2": arg2}   # При передачи доп. параметров в функцию return должен выглядеть с из возвратом, чтобы увидеть их значения return {"categories": categories, "arg1": arg1, "arg2": arg2}
