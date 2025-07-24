@@ -117,7 +117,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/'  # Это URL-префикс, по которому браузер будет запрашивать статические файлы
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Это куда Django собирает все статические файлы, когда ты запускаешь команду: python manage.py collectstatic. Django берёт CSS из всех приложений, копирует их и складывает сюда — для продакшна (например, при деплое на сервер)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'education/static'),  # Это где искать твои собственные статические файлы в проекте (до collectstatic). Например, у тебя есть main.js, style.css — они лежат в education/static. Django знает: “ага, это моя исходная папка статики, я найду там всё нужное”. Это особенно полезно в режиме разработки (DEBUG=True) 
+]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
