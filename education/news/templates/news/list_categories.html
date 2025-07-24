@@ -1,8 +1,8 @@
 <div class="list-group">
-    {{ arg1 }} {{ arg2 }}
-    {% for item_category in categories %}
-        <a href="{% url 'category' item_category.pk %}" class="list-group-item list-group-item-action" aria-current="true">{{  item_category.title }}</a>
-    {% empty %}
-        <p class="text-muted">Категорий нет.</p>
-    {% endfor %}
+  {% for item_category in categories %}
+  <!-- Далее в ссылку href мы обращаемся к объекту модели и вызываем метод, который доступен для этого объекта из-за того, что он принадлежт этой модели (Модель - это класс, объект модели - это объект класса и все методы класса доступны для всех объектов класса). Т.е. мы вызываем метод get_absolute_url для объекта модели и этот метод возвращает нам ссылку на конкретный объект модели -->
+    <a href="{{ item_category.get_absolute_url }}" class="list-group-item list-group-item-action" aria-current="true" >{{ item_category.title }}</a >
+  {% empty %}
+    <p class="text-muted">Категорий нет.</p>
+  {% endfor %}
 </div>

@@ -1,17 +1,18 @@
-{% load news_tags %}
-
+{% load news_tags %} {% comment %} # Сайдбар закоментирован, чтобы на странице
+отображался пока только один виджет
 <div class="list-group">
-    {% list_categories as categories  %}
-    {% for item_category in categories %}
-        <a href="{% url 'category' item_category.pk %}" class="list-group-item list-group-item-action" aria-current="true">{{  item_category.title }}</a>
-    {% empty %}
-        <p class="text-muted">Категорий нет.</p>
-    {% endfor %}
+  {% list_categories as categories %} {% for item_category in categories %}
+  <a
+    href="{% url 'category' item_category.pk %}"
+    class="list-group-item list-group-item-action"
+    aria-current="true"
+    >{{ item_category.title }}</a
+  >
+  {% empty %}
+  <p class="text-muted">Категорий нет.</p>
+  {% endfor %}
 </div>
-
-<br>
-
-{% show_categories arg2='User' arg1='Hi' %}
+{% endcomment %} {% show_categories %}
 <!-- После подключения inclusion tags на странице два рабочих виджета
  Разница в том, что в первом случае мы только получили данные и под них ещё надо формировать разметку,
 а во втором случае мы просто обратились к тегу и он сам срендерил нам страницу с данными. -->

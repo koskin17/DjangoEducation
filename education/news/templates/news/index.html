@@ -14,7 +14,7 @@
 <div class="card mb-3">
     <div class="card-header">
     <!-- {{ forloop.counter }} forloop.counter - это встроенная переменная, которая позволяет получить номер текущего элемента в цикле. -->
-        Категория: <a href="{% url 'category' item_news.category.pk %}">{{ item_news.category }}</a>
+        Категория: <a href="{{ item_news.category.get_absolute_url }}">{{ item_news.category }}</a>
     </div>
     <div class="card-body">
         <div class="d-flex align-items-start" style="min-height: 300px;">    {# Добавляем d-flex для создания flex-контейнера #}
