@@ -10,7 +10,7 @@ class News(models.Model):
     photo = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name="Фото", blank=True)
     # В этом поле сохраняется путь к загруженному файлу. Отличие от FileField в том, что FileField позволяет загружать файлы любого типа,  а ImageField только изображения
     is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name = 'Категория') # Модель можно указать двумя способами: ссылкой на модель (но только в том случае, если эта модель объявлена раньше, перед указанием foreign key в другой модели) или указав имя модели - 'Category'. null=True поставлен из-за того, что category и связь с category были добавлены после того, как в БД уже были добавлены новости без категории.
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name = 'Категория') # Модель можно указать двумя способами: ссылкой на модель (но только в том случае, если эта модель объявлена раньше, перед указанием foreign key в другой модели) или указав имя модели - 'Category'. null=True поставлен из-за того, что category и связь с category были добавлены после того, как в БД уже были добавлены новости без категории.
     
      # Создание класса, который позволяет изменять различные поля в админ.панели
     class Meta:
