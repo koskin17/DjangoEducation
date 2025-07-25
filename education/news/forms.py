@@ -1,6 +1,8 @@
 from django import forms
 from .models import Category
 from .models import News
+import re
+from django.core.exceptions import ValidationError
 
 
 # class NewsForm(forms.Form): # Формы всегда наследуются от родительского класса forms.Form или forms.Modelforms, в зависимости от того, какая форма и привязан ли она к модели или нет. В данном случае создаётся форма, которая не привязан к модели и все поля в форме отдельно, конкретно прописываются. Если же форма привязан к модели, то все поля в форме проставляются django автоматически. Все поля в формам в django по умолчанию имеют статут requiered = True, т.е. если поле не обязательное, то надо отдельно дополнительно прописывать requiered = False
@@ -24,3 +26,9 @@ class NewsForm(forms.ModelForm): #Если форма связана с моде
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'})
         }
+
+    def clean_title(self):   # Пользовательские валидаторы всегда называются с clean_ и потом название поля, которое валидируется
+        title = self.cleaned_data['title']  # Тут мы получаем значение из словаря по ключу title (очищенный) из объекта (self)
+        if re.match(r'\d', title):   # Если в начале строки title будут найдены цифры, то такая строка нам не подходит
+            raise ValidationError('Название не должно начинаться с цифры!')
+        return title
