@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import News, Category
 from .forms import NewsForm
 
@@ -23,7 +23,12 @@ def view_news(request, news_id):
 
 def add_news(request):
     if request.method == 'POST':
-        pass
+        form = NewsForm(request.POST) # Так мы обращаемся к форме и забираем все данные, который она отправила методом POST
+        # Можно отдельно проверять, прошла ли форма валидацию
+        if form.is_valid():   # Есть метод is_bond, который позволяет проверить, были ли отправлена форма и заполнился ли объект из formsэтими данными
+            # print(form.cleaned_data)    # Если форма проходит валидацию, то у неё появляется свойство cleaned_data - это словарь, из которого эти данные потом и сохраняются
+            news = News.objects.create(**form.cleaned_data) # В данном случае ** - это метод python для распаковки словарей. Т.е. title, content и все остальные поля будут автоматически присвоены соответствующим ключам. Это и есть сохранение новости. Здесь используется метод create потому что метода save() нет у форм, которые не связаны с моделями.
+            return redirect(news)
     else:
         form = NewsForm()
     return render(request, 'news/add_news.html', {'form': form})
