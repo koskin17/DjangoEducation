@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import News, Category
 from .forms import NewsForm
@@ -69,11 +69,14 @@ def get_category(request, category_id):
     category = Category.objects.get(pk=category_id)
     return render(request, 'news/category.html', { 'news': news, 'category': category})
 
-def view_news(request, news_id):
-    # news_item = News.objects.get(pk=news_id)
-    news_item = get_object_or_404(News, pk=news_id)
-    return render(request, 'news/view_news.html', {"news_item": news_item})
-
+class ViewNews(DetailView):  # Этот класс используется для отображения одной новости
+    model = News  # Здесь указывается модель, с которой мы будем работать
+    context_object_name = 'news_item'  # Здесь указывается имя объекта, который будет передаваться в шаблон. По умолчанию это object, но мы переименовываем его в news_item, чтобы было понятнее
+    # template_name   = 'news/news_detail.html' # Это написано как напоминание о том,  что в качестве шаблона можно использовать свой шаблон, а не тот, который по умолчанию ищет Django. Если не указать, то будет использоваться шаблон news/news_detail.html
+    # pk_url_kwarg = 'news_id'  # Здесь указывается, что в качестве идентификатора новости будет использоваться параметр news_id из URL. Это нужно для того, чтобы Django знал, какой именно объект нужно получить из базы данных. В противном случае он будет пытаться использовать первичный ключ (pk) модели, который по умолчанию называется 'pk'.
+    # pk_url_kwarg - это параметр, который используется для получения объекта по его первичному ключу (pk) из URL.
+    # pk - это первичный ключ, который используется для идентификации объекта в базе данных
+    
 def add_news(request):
     if request.method == 'POST':
         form = NewsForm(request.POST) # Так мы обращаемся к форме и забираем все данные, который она отправила методом POST
