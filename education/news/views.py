@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy # Суть reverse_lazy в том, что он постоение ссылки будет использовано только тогда, когда до этого момента дойдёт очередь
 
 from .models import News, Category
 from .forms import NewsForm
@@ -76,18 +77,24 @@ class ViewNews(DetailView):  # Этот класс используется дл
     # pk_url_kwarg = 'news_id'  # Здесь указывается, что в качестве идентификатора новости будет использоваться параметр news_id из URL. Это нужно для того, чтобы Django знал, какой именно объект нужно получить из базы данных. В противном случае он будет пытаться использовать первичный ключ (pk) модели, который по умолчанию называется 'pk'.
     # pk_url_kwarg - это параметр, который используется для получения объекта по его первичному ключу (pk) из URL.
     # pk - это первичный ключ, который используется для идентификации объекта в базе данных
-    
-def add_news(request):
-    if request.method == 'POST':
-        form = NewsForm(request.POST) # Так мы обращаемся к форме и забираем все данные, который она отправила методом POST
-        # Можно отдельно проверять, прошла ли форма валидацию
-        if form.is_valid():   # Есть метод is_bond, который позволяет проверить, были ли отправлена форма и заполнился ли объект из formsэтими данными
-            # print(form.cleaned_data)    # Если форма проходит валидацию, то у неё появляется свойство cleaned_data - это словарь, из которого эти данные потом и сохраняются
-            # news = News.objects.create(**form.cleaned_data) # В данном случае ** - это метод python для распаковки словарей. Т.е. title, content и все остальные поля будут автоматически присвоены соответствующим ключам. Это и есть сохранение новости. Здесь используется метод create потому что метода save() нет у форм, которые не связаны с моделями.
-            # # Для форм, связанных с моделями, есть метод save(). При его использовании не нужно очищать данные (form.cleaned_data)
-            news = form.save()
-            return redirect(news)
-    else:
-        # Если же данные приходят не POST, а GET, то просто создаётся новая пустая форма
-        form = NewsForm()
-    return render(request, 'news/add_news.html', {'form': form})
+
+class CreateNews(CreateView):
+    form_class = NewsForm
+    template_name = 'news/add_news.html'
+    # success_url = reverse_lazy('home')    # Тут полностью переопределяется url от того, который по умолчанию. Важно помнить, что функцию reverse вообще нельзя использовать в данном случае - только reverse_lazy
+
+# Функция ниже была создана до внедрения классов-контроллеров
+# def add_news(request):
+#     if request.method == 'POST':
+#         form = NewsForm(request.POST) # Так мы обращаемся к форме и забираем все данные, который она отправила методом POST
+#         # Можно отдельно проверять, прошла ли форма валидацию
+#         if form.is_valid():   # Есть метод is_bond, который позволяет проверить, были ли отправлена форма и заполнился ли объект из formsэтими данными
+#             # print(form.cleaned_data)    # Если форма проходит валидацию, то у неё появляется свойство cleaned_data - это словарь, из которого эти данные потом и сохраняются
+#             # news = News.objects.create(**form.cleaned_data) # В данном случае ** - это метод python для распаковки словарей. Т.е. title, content и все остальные поля будут автоматически присвоены соответствующим ключам. Это и есть сохранение новости. Здесь используется метод create потому что метода save() нет у форм, которые не связаны с моделями.
+#             # # Для форм, связанных с моделями, есть метод save(). При его использовании не нужно очищать данные (form.cleaned_data)
+#             news = form.save()
+#             return redirect(news)
+#     else:
+#         # Если же данные приходят не POST, а GET, то просто создаётся новая пустая форма
+#         form = NewsForm()
+#     return render(request, 'news/add_news.html', {'form': form})

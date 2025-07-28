@@ -26,5 +26,6 @@ urlpatterns = [
     # 4. Передаёт `category_id=3` → доступно как `self.kwargs['category_id']`
     # path('news/<int:news_id>/', view_news, name='view_news'), # Это старый маршрут, который был до применения класса DetailView
     path('news/<int:pk>/', ViewNews.as_view(), name='view_news'),
-    path('news/add-news/', add_news, name='add_news'),
+    # path('news/add-news/', add_news, name='add_news'),
+    path('news/add-news/', CreateNews.as_view(), name='add_news'),
 ]
